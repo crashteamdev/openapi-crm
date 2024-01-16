@@ -1,0 +1,11 @@
+type: object
+required:
+  - id
+  - name
+properties:
+  id:
+    description: Идентификатор воронки
+    type: integer
+  name:
+    description: Название воронки
+    type: string

@@ -1,0 +1,17 @@
+get:
+  summary: Получить список воронок
+  description: |
+  operationId: getLead
+  security:
+    - bearer: []
+  tags:
+    - pipeline
+  responses:
+        '200':
+          description: Получен список сделок
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../components/parameters/pipeline.yaml'
