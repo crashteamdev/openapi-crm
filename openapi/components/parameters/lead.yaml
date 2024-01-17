@@ -1,0 +1,11 @@
+type: object
+required:
+  - pipeline_id
+  - contact_id
+properties:
+  pipeline_id:
+    description: Идентификатор воронки
+    type: integer
+  contact_id:
+    description: Идентификатор контакта
+    type: integer

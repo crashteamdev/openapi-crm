@@ -1,0 +1,18 @@
+post:
+  summary: Добавить сделку
+  description: |
+    В передаваемый список полей добавляются уникальные, для каждого клиента, поля которые настраиваются в системе
+  operationId: createLead
+  security:
+    - bearer: []
+  tags:
+    - lead
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/parameters/lead.yaml'
+  responses:
+        '201':
+          description: Сделка создана
+          content: {}

@@ -1,0 +1,32 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: CrashTeam CRM API
+  description:
+    $ref: './docs/api.md'
+  termsOfService: http://marketdb.ru/terms-of-use/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: 'https://{subdomain}.marketdb.pro/{version}'
+    variables:
+      subdomain:
+        default: api
+      version:
+        enum:
+          - v1
+        default: v1
+security:
+  - bearer: []
+paths:
+  '/crm/contact':
+    $ref: './paths/crm-contact.yaml'
+  '/crm/lead':
+    $ref: './paths/crm-lead.yaml'
+  '/crm/pipeline':
+    $ref: './paths/crm-pipeline.yaml'
+components:
+  securitySchemes:
+    bearer:
+      $ref: './components/security-schemas/Bearer.yaml'
