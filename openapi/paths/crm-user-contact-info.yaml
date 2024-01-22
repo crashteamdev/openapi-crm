@@ -1,0 +1,43 @@
+get:
+  summary: Получение контактных данных пользователя
+  operationId: getUserContactInfo
+  tags:
+    - user
+  responses:
+    '200':
+      description: Получены контактные данные пользователя
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserContact.yaml
+    '400':
+      $ref: ../components/responses/BadRequest.yaml
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
+    '403':
+      $ref: ../components/responses/Forbidden.yaml
+    '404':
+      description: Пользователь не найден
+put:
+  summary: Обновить контактные данные пользователя
+  description: |
+    Обновить информацию о пользователе
+  operationId: updateUserContactInfo
+  tags:
+    - user
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/UserContact.yaml
+  responses:
+    '200':
+      description: Обновлена информация о пользователе
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserContact.yaml
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
+    '403':
+      $ref: ../components/responses/Forbidden.yaml

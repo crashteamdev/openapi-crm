@@ -20,12 +20,10 @@ servers:
 security:
   - bearer: []
 paths:
-  '/crm/contact':
-    $ref: './paths/crm-contact.yaml'
   '/crm/lead':
     $ref: './paths/crm-lead.yaml'
-  '/crm/pipeline':
-    $ref: './paths/crm-pipeline.yaml'
+  '/crm/user/contact-info':
+    $ref: './paths/crm-user-contact-info.yaml'
 components:
   securitySchemes:
     bearer:

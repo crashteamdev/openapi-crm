@@ -3,10 +3,10 @@ post:
   description: |
     В передаваемый список полей добавляются уникальные, для каждого клиента, поля которые настраиваются в системе
   operationId: createLead
-  security:
-    - bearer: []
   tags:
     - lead
+  parameters:
+    - $ref: ../components/parameters/requestId.yaml
   requestBody:
     content:
       application/json:
