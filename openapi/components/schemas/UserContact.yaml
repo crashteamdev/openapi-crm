@@ -1,0 +1,11 @@
+type: object
+required:
+  - email
+  - phone
+properties:
+  email:
+    $ref: '../schemas/Email.yaml'
+  phone:
+    $ref: '../schemas/Phone.yaml'
+  inn:
+    $ref: '../schemas/Inn.yaml'
