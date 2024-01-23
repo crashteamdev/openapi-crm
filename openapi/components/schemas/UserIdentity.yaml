@@ -1,0 +1,15 @@
+type: object
+required:
+  - firstname
+  - lastname
+  - middlename
+properties:
+  firstname:
+    type: string
+    description: Имя
+  lastname:
+    type: string
+    description: Фамилия
+  middlename:
+    type: string
+    description: Отчество

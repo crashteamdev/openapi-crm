@@ -1,0 +1,30 @@
+post:
+  summary: Подтвердить контактные данные пользователя
+  description: |
+    Подтвердить информацию о пользователе
+  operationId: approveUserContactInfo
+  tags:
+    - user
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          title: ApproveUserContact
+          required:
+            - approvalCode
+          properties:
+            approvalCode:
+              description: Код подтверждения
+              type: string
+  responses:
+    '200':
+      description: Подтверждена информация о пользователе
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserContact.yaml
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
+    '403':
+      $ref: ../components/responses/Forbidden.yaml

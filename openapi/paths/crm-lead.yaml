@@ -5,13 +5,15 @@ post:
   operationId: createLead
   tags:
     - lead
+  security:
+    []
   parameters:
     - $ref: ../components/parameters/requestId.yaml
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../components/parameters/lead.yaml'
+          $ref: '../components/schemas/Lead/CreateLead.yaml'
   responses:
         '201':
           description: Сделка создана

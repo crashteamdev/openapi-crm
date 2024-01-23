@@ -24,6 +24,8 @@ paths:
     $ref: './paths/crm-lead.yaml'
   '/crm/user/contact-info':
     $ref: './paths/crm-user-contact-info.yaml'
+  '/crm/user/contact-info/approve':
+    $ref: './paths/crm-user-contact-info-approve.yaml'
 components:
   securitySchemes:
     bearer:

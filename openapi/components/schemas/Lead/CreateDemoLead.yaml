@@ -1,0 +1,9 @@
+description: Create demo lead
+allOf:
+  - $ref: ./CreateLead.yaml
+  - type: object
+    properties:
+      userIdentity:
+        $ref: '../UserIdentity.yaml'
+      userPhoneNumber:
+        $ref: '../Phone.yaml'
