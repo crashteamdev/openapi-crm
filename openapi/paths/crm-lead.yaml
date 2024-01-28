@@ -15,6 +15,10 @@ post:
         schema:
           $ref: '../components/schemas/Lead/CreateLead.yaml'
   responses:
-        '201':
-          description: Сделка создана
-          content: {}
+    '201':
+      description: Сделка создана
+      content: { }
+    '400':
+      $ref: ../components/responses/BadRequest.yaml
+    '409':
+      $ref: ../components/responses/Conflict.yaml
