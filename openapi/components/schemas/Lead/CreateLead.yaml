@@ -1,18 +1,11 @@
 type: object
 required:
-  - name
-  - pipelineId
   - leadType
 discriminator:
   propertyName: leadType
   mapping:
     demo: ./CreateDemoLead.yaml
 properties:
-  name:
-    type: string
-    description: Название сделки
-  pipelineId:
-    $ref: '../PipelineId.yaml'
   leadType:
     type: string
     enum:
