@@ -9,3 +9,6 @@ properties:
     $ref: '../schemas/Phone.yaml'
   inn:
     $ref: '../schemas/Inn.yaml'
+  verified:
+    type: boolean
+    description: Признак подтвержденных данных аккаунта
