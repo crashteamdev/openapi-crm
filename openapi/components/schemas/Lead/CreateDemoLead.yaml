@@ -1,4 +1,8 @@
 description: Create demo lead
+required:
+  - userIdentity
+  - userPhoneNumber
+  - userEmail
 allOf:
   - $ref: ./CreateLead.yaml
   - type: object
@@ -7,3 +11,5 @@ allOf:
         $ref: '../UserIdentity.yaml'
       userPhoneNumber:
         $ref: '../Phone.yaml'
+      userEmail:
+        $ref: '../Email.yaml'
