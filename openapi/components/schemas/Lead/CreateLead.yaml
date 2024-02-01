@@ -5,9 +5,13 @@ discriminator:
   propertyName: leadType
   mapping:
     demo: ./CreateDemoLead.yaml
+    feedback: ./CreateFeedbackLead.yaml
+    service: ./CreateServiceLead.yaml
 properties:
   leadType:
     type: string
     enum:
       - demo
+      - feedback
+      - service
 

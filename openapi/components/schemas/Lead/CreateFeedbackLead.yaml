@@ -1,0 +1,17 @@
+description: Create feedback lead
+required:
+  - userIdentity
+  - userPhoneNumber
+  - userEmail
+allOf:
+  - $ref: ./CreateLead.yaml
+  - type: object
+    properties:
+      userIdentity:
+        $ref: '../UserIdentity.yaml'
+      userPhoneNumber:
+        $ref: '../Phone.yaml'
+      userEmail:
+        $ref: '../Email.yaml'
+      feedbackMessage:
+        type: string
