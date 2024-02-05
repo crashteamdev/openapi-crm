@@ -3,6 +3,7 @@ required:
   - userIdentity
   - userPhoneNumber
   - userEmail
+  - serviceName
 allOf:
   - $ref: ./CreateLead.yaml
   - type: object
@@ -13,3 +14,6 @@ allOf:
         $ref: '../Phone.yaml'
       userEmail:
         $ref: '../Email.yaml'
+      serviceName:
+        type: string
+        description: Наименование услуги
