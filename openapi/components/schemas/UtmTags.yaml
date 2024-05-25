@@ -1,0 +1,17 @@
+type: object
+properties:
+  source:
+    type: string
+    description: UTM Source
+  medium:
+    type: string
+    description: UTM Medium
+  campaign:
+    type: string
+    description: UTM Campaign
+  content:
+    type: string
+    description: UTM Content
+  term:
+    type: string
+    description: UTM Term
