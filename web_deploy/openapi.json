@@ -1,0 +1,482 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "CrashTeam CRM API",
+    "description": "CrashTeam Dev CRM APIs\n",
+    "termsOfService": "http://marketdb.ru/terms-of-use/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://{subdomain}.marketdb.pro/{version}",
+      "variables": {
+        "subdomain": {
+          "default": "api"
+        },
+        "version": {
+          "enum": [
+            "v1"
+          ],
+          "default": "v1"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "paths": {
+    "/crm/lead": {
+      "post": {
+        "summary": "Добавить сделку",
+        "description": "В передаваемый список полей добавляются уникальные, для каждого клиента, поля которые настраиваются в системе\n",
+        "operationId": "createLead",
+        "tags": [
+          "lead"
+        ],
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLead"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Сделка создана",
+            "content": {}
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/crm/user/contact-info": {
+      "get": {
+        "summary": "Получение контактных данных пользователя",
+        "operationId": "getUserContactInfo",
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "200": {
+            "description": "Получены контактные данные пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserContact"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "description": "Пользователь не найден"
+          }
+        }
+      },
+      "put": {
+        "summary": "Обновить контактные данные пользователя",
+        "description": "Обновить информацию о пользователе\n",
+        "operationId": "updateUserContactInfo",
+        "tags": [
+          "user"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserContact"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Обновлена информация о пользователе",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserContact"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/crm/user/contact-info/approve": {
+      "post": {
+        "summary": "Подтвердить контактные данные пользователя",
+        "description": "Подтвердить информацию о пользователе\n",
+        "operationId": "approveUserContactInfo",
+        "tags": [
+          "user"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "ApproveUserContact",
+                "required": [
+                  "approvalCode"
+                ],
+                "properties": {
+                  "approvalCode": {
+                    "description": "Код подтверждения",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Подтверждена информация о пользователе",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserContact"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "description": "Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.\n```shell\n  Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}\n```\n",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "requestId": {
+        "name": "X-Request-ID",
+        "in": "header",
+        "description": "Уникальный идентификатор запроса к системе",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "schemas": {
+      "CreateLead": {
+        "type": "object",
+        "required": [
+          "leadType"
+        ],
+        "discriminator": {
+          "propertyName": "leadType",
+          "mapping": {
+            "demo": "#/components/schemas/CreateDemoLead",
+            "feedback": "#/components/schemas/CreateFeedbackLead",
+            "service": "#/components/schemas/CreateServiceLead"
+          }
+        },
+        "properties": {
+          "leadType": {
+            "type": "string",
+            "enum": [
+              "demo",
+              "feedback",
+              "service"
+            ]
+          }
+        }
+      },
+      "UserIdentity": {
+        "type": "object",
+        "required": [
+          "firstname"
+        ],
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "Имя"
+          }
+        }
+      },
+      "Phone": {
+        "description": "Номер телефона",
+        "type": "string"
+      },
+      "Email": {
+        "description": "Электронная почта",
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+      },
+      "UtmTags": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "UTM Source"
+          },
+          "medium": {
+            "type": "string",
+            "description": "UTM Medium"
+          },
+          "campaign": {
+            "type": "string",
+            "description": "UTM Campaign"
+          },
+          "content": {
+            "type": "string",
+            "description": "UTM Content"
+          },
+          "term": {
+            "type": "string",
+            "description": "UTM Term"
+          }
+        }
+      },
+      "CreateDemoLead": {
+        "description": "Create demo lead",
+        "required": [
+          "userIdentity",
+          "userPhoneNumber",
+          "userEmail"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateLead"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "userIdentity": {
+                "$ref": "#/components/schemas/UserIdentity"
+              },
+              "userPhoneNumber": {
+                "$ref": "#/components/schemas/Phone"
+              },
+              "userEmail": {
+                "$ref": "#/components/schemas/Email"
+              },
+              "utmTags": {
+                "$ref": "#/components/schemas/UtmTags"
+              }
+            }
+          }
+        ]
+      },
+      "CreateFeedbackLead": {
+        "description": "Create feedback lead",
+        "required": [
+          "userIdentity",
+          "userPhoneNumber",
+          "userEmail"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateLead"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "userIdentity": {
+                "$ref": "#/components/schemas/UserIdentity"
+              },
+              "userPhoneNumber": {
+                "$ref": "#/components/schemas/Phone"
+              },
+              "userEmail": {
+                "$ref": "#/components/schemas/Email"
+              },
+              "feedbackMessage": {
+                "type": "string"
+              },
+              "utmTags": {
+                "$ref": "#/components/schemas/UtmTags"
+              }
+            }
+          }
+        ]
+      },
+      "CreateServiceLead": {
+        "description": "Create service lead",
+        "required": [
+          "userIdentity",
+          "userPhoneNumber",
+          "userEmail",
+          "serviceName"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateLead"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "userIdentity": {
+                "$ref": "#/components/schemas/UserIdentity"
+              },
+              "userPhoneNumber": {
+                "$ref": "#/components/schemas/Phone"
+              },
+              "userEmail": {
+                "$ref": "#/components/schemas/Email"
+              },
+              "serviceName": {
+                "type": "string",
+                "description": "Наименование услуги"
+              },
+              "utmTags": {
+                "$ref": "#/components/schemas/UtmTags"
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 600,
+            "description": "The HTTP status code."
+          },
+          "error": {
+            "type": "string",
+            "description": "A short, human-readable summary of the problem type. It SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization."
+          }
+        }
+      },
+      "Inn": {
+        "description": "ИНН",
+        "type": "string",
+        "pattern": "^[\\d+]{10,12}$"
+      },
+      "UserContact": {
+        "type": "object",
+        "required": [
+          "email",
+          "phone"
+        ],
+        "properties": {
+          "email": {
+            "$ref": "#/components/schemas/Email"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/Phone"
+          },
+          "inn": {
+            "$ref": "#/components/schemas/Inn"
+          },
+          "verified": {
+            "type": "boolean",
+            "description": "Признак подтвержденных данных аккаунта"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Переданы ошибочные данные",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Ошибка в переданных данных",
+              "type": "object",
+              "required": [
+                "code"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "invalidRequest"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Несанкционированный доступ, использовались неверные учетные данные.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Доступ запрещен.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
