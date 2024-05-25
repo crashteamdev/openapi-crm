@@ -13,3 +13,5 @@ allOf:
         $ref: '../Phone.yaml'
       userEmail:
         $ref: '../Email.yaml'
+      utmTags:
+        $ref: '../UtmTags.yaml'

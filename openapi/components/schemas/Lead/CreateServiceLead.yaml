@@ -17,3 +17,5 @@ allOf:
       serviceName:
         type: string
         description: Наименование услуги
+      utmTags:
+        $ref: '../UtmTags.yaml'

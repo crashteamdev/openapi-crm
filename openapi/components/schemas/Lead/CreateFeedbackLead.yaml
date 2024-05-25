@@ -15,3 +15,5 @@ allOf:
         $ref: '../Email.yaml'
       feedbackMessage:
         type: string
+      utmTags:
+        $ref: '../UtmTags.yaml'
